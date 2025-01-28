@@ -1,13 +1,24 @@
 {
     "version": 2,
-    "builds":[{
-        "src": "FIR/wsgi.py",
-        "use": "@vercel/python",
-        "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
-    }],
-
-    "routes": [{
-        "src": "/(.*)",
-        "dest": "FIR/wsgi.py"
-    }]
+    "builds": [
+        {
+            "src": "FIR/wsgi.py",
+            "use": "@vercel/python",
+            "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+        },
+        {
+            "src": "FIR/staticfiles/*",
+            "use": "@vercel/static"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/static/(.*)",
+            "dest": "/FIR/staticfiles/$1"
+        },
+        {
+            "src": "/(.*)",
+            "dest": "FIR/wsgi.py"
+        }
+    ]
 }
